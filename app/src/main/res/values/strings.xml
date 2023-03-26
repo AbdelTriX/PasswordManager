@@ -13,4 +13,7 @@
     <string name="desc_three">Simple way to protect your secret </string>
     <string name="desc_fourth">What are you waiting for join now</string>
 
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+
 </resources>
