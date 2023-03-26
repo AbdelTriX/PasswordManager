@@ -3,35 +3,31 @@ package com.example.passwordmanager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
     TextInputEditText passwordEditText;
-    TextView signUp ;
-
-    @SuppressLint("ClickableViewAccessibility")
+    TextView signIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
 
         //////////////// Hide Navbar //////////////////
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();;
 //////////////////////////////////////////////////////
-         passwordEditText = findViewById(R.id.passwordEt);
-         signUp = findViewById(R.id.signUp);
+        passwordEditText = findViewById(R.id.passwordEt);
+        signIn = findViewById(R.id.signIn);
 
         ///////////////// FOR  HIDE AND SHOW PASSWORD ///////////////////////////////////////////////////
         passwordEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
@@ -59,10 +55,10 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         });
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SignUpActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });

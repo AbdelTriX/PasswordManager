@@ -7,13 +7,13 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/black"
-    tools:context=".LoginActivity">
+    tools:context=".SignUpActivity">
 
     <TextView
         android:layout_width="439dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/sign_in"
+        android:text="Sign Up"
         android:textColor="@color/yellow"
         android:textSize="50sp"
         android:textStyle="bold" />
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/white"
-        android:text="Please login to your account"
+        android:text="Create your account"
         android:layout_marginTop="5dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +83,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
-        android:text="Sign In"
+        android:text="Sign Up"
         android:background="@drawable/custom_button"
         android:textColor="@color/black"/>
 
@@ -155,13 +155,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="Don't have an account ?"/>
+            android:text="Already Have an account ?"/>
         <TextView
-            android:id="@+id/signUp"
+            android:id="@+id/signIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:text="Sign Up"
+            android:text="Sign In"
             android:textColor="@color/yellow"
             android:textStyle="bold"/>
     </LinearLayout>
