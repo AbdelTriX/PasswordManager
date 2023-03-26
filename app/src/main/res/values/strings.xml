@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Password Manager</string>
+
+    //Headings
+    <string name="heading_one">We are happy to welcome you in our app</string>
+    <string name="heading_two">Only one click</string>
+    <string name="heading_three">Fast and easy </string>
+    <string name="heading_fourth">Join now</string>
+
+    //Description
+    <string name="desc_one">Start protecting your password with easy way </string>
+    <string name="desc_two">With one click you can save your password and remebre it </string>
+    <string name="desc_three">Simple way to protect your secret </string>
+    <string name="desc_fourth">What are you waiting for join now</string>
+
+</resources>
