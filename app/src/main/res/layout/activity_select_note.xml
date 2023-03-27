@@ -47,7 +47,7 @@
             android:padding="20dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="240sp"
+                android:layout_height="200sp"
                 android:textColor="@color/white"
                 android:hint="Description"
                 android:textColorHint="@color/white"
@@ -62,7 +62,7 @@
             android:padding="20dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:textColor="@color/white"
                 android:hint="Comment"
                 android:textColorHint="@color/white"
@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="SAVE"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="80dp"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:layout_gravity="bottom|center"
