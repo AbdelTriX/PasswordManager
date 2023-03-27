@@ -12,6 +12,15 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Select_Note"
+            android:exported="false" />
+        <activity
+            android:name=".Select_CreditCard"
+            android:exported="false" />
+        <activity
+            android:name=".Select_Login"
+            android:exported="false" />
+        <activity
             android:name=".New_Item_Activity"
             android:exported="false" />
         <activity
