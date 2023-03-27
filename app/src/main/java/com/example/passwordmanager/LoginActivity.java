@@ -10,6 +10,7 @@ import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText passwordEditText;
     TextView signUp ;
+    Button btn_signIn;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 //////////////////////////////////////////////////////
          passwordEditText = findViewById(R.id.passwordEt);
          signUp = findViewById(R.id.signUp);
+         btn_signIn = findViewById(R.id.btn_signIn);
 
         ///////////////// FOR  HIDE AND SHOW PASSWORD ///////////////////////////////////////////////////
         passwordEditText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
@@ -67,5 +70,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        btn_signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Accueil.class);
+                startActivity(intent);
+            }
+        });
     }
 }

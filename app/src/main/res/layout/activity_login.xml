@@ -80,12 +80,12 @@
         android:id="@+id/btn_signIn"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
-        android:text="Sign In"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/custom_button"
-        android:textColor="@color/black"/>
+        android:text="Sign In"
+        android:textColor="@color/black" />
 
     <RelativeLayout
         android:layout_width="match_parent"

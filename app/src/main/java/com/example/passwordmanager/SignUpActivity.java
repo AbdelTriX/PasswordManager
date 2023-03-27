@@ -3,6 +3,7 @@ package com.example.passwordmanager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -17,6 +18,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     TextInputEditText passwordEditText;
     TextView signIn;
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
