@@ -21,12 +21,23 @@ public class    New_Item_Activity extends AppCompatActivity {
 
     ListView listView;
     String mTitle[] = {"Login", "Credit Card", "Note"};
-    int image[] = {R.drawable.login, R.drawable.creditcard, R.drawable.notee};
+    int image[] = {R.drawable.login, R.drawable.creditcard, R.drawable.note};
+    TextView cancel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
+
+        cancel = findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Accueil.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         //action bar add or remove
         getSupportActionBar().setTitle("Add New Item");

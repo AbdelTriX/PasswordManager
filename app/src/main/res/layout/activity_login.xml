@@ -29,43 +29,49 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Email"
         android:layout_marginTop="50dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="20dp"
         >
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailEt"
-            android:hint="Email"
-            android:textSize="15dp"
-            android:textColorHint="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:drawablePadding="4dp"
             android:elevation="6dp"
+            android:hint="Email"
+            android:textColor="@color/white"
             android:paddingStart="8dp"
             android:paddingTop="20dp"
             android:paddingEnd="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </com.google.android.material.textfield.TextInputEditText>
+            android:selectAllOnFocus="false"
+            android:textColorHint="@color/white"
+            android:textSize="15dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="372dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:hint="Password"
         android:layout_marginRight="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawablePadding="4dp"
             android:drawableEnd="@drawable/ic_visibility"
+            android:drawablePadding="4dp"
             android:elevation="6dp"
             android:hint="Password"
+            android:textColor="@color/white"
             android:inputType="textPassword"
             android:paddingStart="8dp"
+            android:textColorHint="@color/white"
             android:textSize="15dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
