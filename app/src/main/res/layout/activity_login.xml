@@ -5,93 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@color/black"
     tools:context=".LoginActivity">
 
     <TextView
-        android:layout_width="439dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/sign_in"
+        android:layout_marginTop="130dp"
         android:textColor="@color/yellow"
         android:textSize="50sp"
         android:textStyle="bold" />
 
+
+    <!-- ********************* Pour ProgressBar ****************** -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
         android:text="Please login to your account"
-        android:layout_marginTop="5dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:layout_marginTop="50dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="20dp"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/emailEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawablePadding="4dp"
-            android:elevation="6dp"
-            android:hint="Email"
-            android:textColor="@color/white"
-            android:paddingStart="8dp"
-            android:paddingTop="20dp"
-            android:paddingEnd="20dp"
-            android:selectAllOnFocus="false"
-            android:textColorHint="@color/white"
-            android:textSize="15dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:hint="Password"
-        android:layout_marginRight="20dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/passwordEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableEnd="@drawable/ic_visibility"
-            android:drawablePadding="4dp"
-            android:elevation="6dp"
-            android:hint="Password"
-            android:textColor="@color/white"
-            android:inputType="textPassword"
-            android:paddingStart="8dp"
-            android:textColorHint="@color/white"
-            android:textSize="15dp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:id="@+id/btn_signIn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/custom_button"
-        android:text="Sign In"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -115,10 +50,10 @@
             android:id="@+id/orTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OR"
             android:layout_centerInParent="true"
-            android:textSize="12sp"
-            android:textColor="@color/white"/>
+            android:text="Welcome to PASMAN"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <View
             android:layout_width="match_parent"
@@ -133,14 +68,21 @@
 
     </RelativeLayout>
 
+    <ProgressBar
+        android:layout_marginTop="50dp"
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
     <!-- ****************** LOGIN WITH GOOGLE ****************** -->
     <Button
-        android:id="@+id/btn_google"
-        android:layout_width="200dp"
+        android:id="@+id/btn_signInGoogle"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="260dp"
+        android:layout_gravity="center"
         android:drawableLeft="@drawable/google_icon"
         android:text="Continue with Google"
         android:background="@drawable/custom_button"
@@ -149,28 +91,6 @@
 
 
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="40dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Don't have an account ?"/>
-        <TextView
-            android:id="@+id/signUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:text="Sign Up"
-            android:textColor="@color/yellow"
-            android:textStyle="bold"/>
-    </LinearLayout>
 
 
 </LinearLayout>

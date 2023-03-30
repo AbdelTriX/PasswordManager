@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class Select_Note extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

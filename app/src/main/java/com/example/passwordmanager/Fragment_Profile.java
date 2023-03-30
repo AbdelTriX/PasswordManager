@@ -1,8 +1,10 @@
 package com.example.passwordmanager;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,6 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +77,12 @@ public class Fragment_Profile extends Fragment {
 
 
     Button btn_logout ;
+    TextView userEmail, userName;
+    ProgressBar progressBar;
+
+    ImageView imageView;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,22 +92,52 @@ public class Fragment_Profile extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         // Inflate the layout for this fragment
         actionBar.setTitle("Profil");
+/////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        userEmail = view.findViewById(R.id.userEmail);
+        userName = view.findViewById(R.id.userName);
         btn_logout = view.findViewById(R.id.btn_logout);
+        imageView = view.findViewById(R.id.imageView);
+
+        progressBar = view.findViewById(R.id.progressBar);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser  user = mAuth.getCurrentUser();
+
+        ///////////////////////////////////////////////////////////////////////////////
+
+ //////////////////////// Vérifier si user déja connécté ///////////////////
+
+        if (user == null){
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
+        }else{
+            userEmail.setText(user.getEmail());
+            userName.setText(user.getDisplayName());
+        }
+
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),LoginActivity.class);
-                startActivity(intent);
+
+                progressBar.setVisibility(View.VISIBLE);
+                GoogleSignInClient signInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
+                signInClient.revokeAccess()
+                        .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                progressBar.setVisibility(View.GONE);
+
+                                FirebaseAuth.getInstance().signOut();
+                                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
+                        });
+
             }
         });
-
-
-
-
-
-
 
         return view;
     }

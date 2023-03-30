@@ -80,8 +80,9 @@
         android:drawablePadding="10dp"
         android:padding="15dp"/>
 
-    <!-- ******************************* Pour Password ************************* -->
+    <!-- ******************************* Pour Commentaire ************************* -->
 
+    <!--
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,6 +96,7 @@
                 android:textColorHint="@color/white"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
+        -->
 
     <TextView
         android:layout_width="wrap_content"
@@ -103,7 +105,7 @@
         android:text="Password History"
         android:textColor="@color/yellow"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="110dp"
         android:drawablePadding="10dp"
         android:padding="15dp"/>
 
