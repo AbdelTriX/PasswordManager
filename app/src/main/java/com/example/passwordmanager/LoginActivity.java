@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView signUp;
     Button btn_signIn;
     GoogleSignInClient mGoogleSignInClient;
-    final int RC_SIGN_IN = 9001;
+    final int RC_SIGN_IN = 100;
     private FirebaseAuth mAuth;
     ProgressBar progressBar;
 
@@ -145,8 +145,6 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    ;
                 });
     }
 }

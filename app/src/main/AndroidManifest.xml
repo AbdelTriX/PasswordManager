@@ -12,6 +12,10 @@
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Generate_password"
+            android:parentActivityName=".Select_Login"
+            android:exported="false" />
+        <activity
             android:name=".Select_Note"
             android:exported="false"
             android:parentActivityName=".New_Item_Activity"
