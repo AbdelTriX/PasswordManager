@@ -1,6 +1,7 @@
 package com.example.passwordmanager;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -11,7 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.passwordmanager.SQLiteDatabase.CreditCard;
+import com.example.passwordmanager.SQLiteDatabase.Login;
+import com.example.passwordmanager.SQLiteDatabase.Note;
+import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,7 +78,6 @@ public class Fragment_Home extends Fragment {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         FloatingActionButton newItem;
 
-        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment__home, container, false);
         actionBar.setTitle("Home");
         //getActivity().setTitle("name label");
@@ -86,7 +92,11 @@ public class Fragment_Home extends Fragment {
         });
         ///////////////////  For Recycler View /////////////////////////////////////////////
 
+        PASMAN_Database pasmanDatabase = new PASMAN_Database(getActivity());
 
+        ArrayList<CreditCard> d = pasmanDatabase.getCreditCard_Data();
+
+        //Toast.makeText(getActivity(),""+d.size(),Toast.LENGTH_LONG).show();
         return view;
     }
 }

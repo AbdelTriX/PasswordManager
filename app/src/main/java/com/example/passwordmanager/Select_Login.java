@@ -5,18 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 public class Select_Login extends AppCompatActivity {
 
     TextInputEditText emailEt, passwordEt, titleEt;
     TextView save, generatePassword;
     private SharedPreferences preferences;
+    private PASMAN_Database pasmanDatabase;
 
 
     @Override
@@ -33,6 +39,7 @@ public class Select_Login extends AppCompatActivity {
         generatePassword = findViewById(R.id.generatePasswordDialog);
 
 
+
         //action bar add or remove
         getSupportActionBar().setTitle("Login");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -46,22 +53,33 @@ public class Select_Login extends AppCompatActivity {
             }
         });
 
+        /////////////////////////// Insert Data in SQLite Database /////////////////////////////////////
+
+        pasmanDatabase = new PASMAN_Database(this);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String title = String.valueOf(titleEt.getText()).toString();
+                String email = String.valueOf(emailEt.getText());
+                String password = String.valueOf(passwordEt.getText());
 
-                titleEt.setText("");
-                emailEt.setText("");
-                passwordEt.setText("");
+                String result = pasmanDatabase.insertLogin(title,email,password);
+                Toast.makeText(Select_Login.this, result, Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(getApplicationContext(),New_Item_Activity.class);
-                startActivity(intent);
-                finish();
+                if (result.equals("Insert Succesfully")) {
+
+                    titleEt.setText("");
+                    emailEt.setText("");
+                    passwordEt.setText("");
+
+                    Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                    startActivity(intent);
+                    finish();
+
+                }
             }
         });
-
     }
-
 
 
 ///////////////////////////// To save data from Select login (Life cycle)   /////////////////////////////////////////
