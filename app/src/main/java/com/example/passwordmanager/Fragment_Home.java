@@ -1,27 +1,21 @@
 package com.example.passwordmanager;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ListView;
 
-import com.example.passwordmanager.SQLiteDatabase.CreditCard;
 import com.example.passwordmanager.SQLiteDatabase.Login;
-import com.example.passwordmanager.SQLiteDatabase.Note;
+import com.example.passwordmanager.SQLiteDatabase.MyAdapter;
 import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -92,11 +86,15 @@ public class Fragment_Home extends Fragment {
         });
         ///////////////////  For Recycler View /////////////////////////////////////////////
 
+        ListView lv = view.findViewById(R.id.listview);
         PASMAN_Database pasmanDatabase = new PASMAN_Database(getActivity());
 
-        ArrayList<CreditCard> d = pasmanDatabase.getCreditCard_Data();
+        ArrayList<Login> logins = pasmanDatabase.getLOGIN_Data();
+        MyAdapter m = new MyAdapter(getActivity(),logins);
+        lv.setAdapter(m);
 
-        //Toast.makeText(getActivity(),""+d.size(),Toast.LENGTH_LONG).show();
+
+
         return view;
     }
 }
