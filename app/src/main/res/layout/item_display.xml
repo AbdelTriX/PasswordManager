@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="5sp"
+    android:orientation="vertical"
+    android:layout_margin="5sp"
+    android:gravity="center">
+
+    <RelativeLayout
+        android:id="@+id/login_card"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/background_login">
+
+        <TextView
+            android:id="@+id/itemLogin_titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:padding="20dp"/>
+
+        <TextView
+            android:id="@+id/emailTv"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="75dp"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            android:text="Email" />
+
+        <TextView
+            android:id="@+id/passwordTv"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="51dp"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            android:text="Password" />
+
+
+
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/login"
+            android:layout_alignParentRight="true"/>
+
+        <ImageView
+            android:id="@+id/delete_Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="91dp"
+            android:layout_marginBottom="15dp"
+            android:scrollbarSize="30sp"
+            android:src="@drawable/ic_delete" />
+        <ImageView
+            android:id="@+id/update_Login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="43dp"
+            android:layout_marginBottom="15dp"
+            android:scrollbarSize="30sp"
+            android:src="@drawable/ic_update"/>
+    </RelativeLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:elevation="5sp"
+        android:layout_margin="5sp"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/credit_card"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:background="@drawable/background_credit_card">
+
+            <TextView
+                android:id="@+id/itemCard_titleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:padding="20dp"/>
+
+            <TextView
+                android:id="@+id/cardNumberTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="145dp"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:text="Card number" />
+
+            <TextView
+                android:id="@+id/typeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="125dp"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:text="Type" />
+
+            <TextView
+                android:id="@+id/cardHolderTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="105dp"
+                android:textSize="15sp"
+                android:textStyle="bold|italic"
+                android:text="Card holder" />
+
+            <TextView
+                android:id="@+id/expiryTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="44dp"
+                android:layout_marginBottom="85dp"
+                android:text="MM/YY"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/cvcTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="160dp"
+                android:layout_marginBottom="85dp"
+                android:text="CVC"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/pinTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="44dp"
+                android:layout_marginBottom="65dp"
+                android:text="PIN"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold|italic" />
+
+
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/creditcard"
+                android:layout_alignParentRight="true"/>
+
+            <ImageView
+                android:id="@+id/delete_CreditCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="91dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_delete_white_version" />
+            <ImageView
+                android:id="@+id/update_CreditCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="43dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_update_white_version"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:elevation="5sp"
+        android:layout_margin="5sp"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:id="@+id/note_card"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:background="@drawable/background_note">
+
+            <TextView
+                android:id="@+id/itemNote_titleTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:text="Title"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:padding="20dp"/>
+
+
+            <TextView
+                android:id="@+id/descriptionTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginBottom="91dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic"
+                android:text="Description" />
+
+
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/note"
+                android:layout_alignParentRight="true"/>
+
+            <ImageView
+                android:id="@+id/delete_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="91dp"
+                android:layout_marginBottom="15dp"
+                android:scrollbarSize="30sp"
+                android:src="@drawable/ic_delete_white_version" />
+            <ImageView
+                android:id="@+id/update_Note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="43dp"
+                android:layout_marginBottom="15dp"
+                android:scrollbarSize="30sp"
+                android:src="@drawable/ic_update_white_version"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>
+
+

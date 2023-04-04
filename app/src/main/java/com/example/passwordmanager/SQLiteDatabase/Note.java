@@ -1,12 +1,15 @@
 package com.example.passwordmanager.SQLiteDatabase;
 
-public class Note {
+import java.sql.Timestamp;
+
+public class Note extends Main{
     private int id;
     private String title;
     private String description;
 
 
-    public Note(int id, String title, String description) {
+    public Note(int id, String title, String description, Timestamp time) {
+        super(time);
         this.id = id;
         this.title = title;
         this.description = description;

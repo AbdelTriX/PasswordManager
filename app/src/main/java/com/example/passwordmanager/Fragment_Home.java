@@ -12,12 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.passwordmanager.SQLiteDatabase.Login;
+import com.example.passwordmanager.SQLiteDatabase.Main;
 import com.example.passwordmanager.SQLiteDatabase.MyAdapter;
 import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +67,15 @@ public class Fragment_Home extends Fragment {
         }
     }
 
+
+
+
+
+
+    private ListView mListView;
+    private MyAdapter mAdapter;
+    private List<Object> mDataList;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,12 +96,30 @@ public class Fragment_Home extends Fragment {
         });
         ///////////////////  For Recycler View /////////////////////////////////////////////
 
-        ListView lv = view.findViewById(R.id.listview);
-        PASMAN_Database pasmanDatabase = new PASMAN_Database(getActivity());
+        PASMAN_Database db = new PASMAN_Database(requireContext());
+//        List<Login> loginList = db.getLOGIN_Data();
+//        List<CreditCard> creditCardList = db.getCreditCard_Data();
+//        List<Note> noteList = db.getNOTE_Data();
+//        db.close();
+//
+//        // Combine all data into one list
+//        mDataList = new ArrayList<>();
+//        mDataList.addAll(loginList);
+//        mDataList.addAll(creditCardList);
+//        mDataList.addAll(noteList);
+//        Collections.reverse(mDataList);
+//
+        // Create adapter and set it to list view
+        ArrayList<Main> main = db.getAllData();
 
-        ArrayList<Login> logins = pasmanDatabase.getLOGIN_Data();
-        MyAdapter m = new MyAdapter(getActivity(),logins);
-        lv.setAdapter(m);
+        MyAdapter adapter = new MyAdapter(getActivity(), main);
+        ListView listView = view.findViewById(R.id.listview);
+        listView.setAdapter(adapter);
+
+
+        // Display the data in a RecyclerView
+
+//////////////////////////////////////////////////////////////////////////////////////
 
 
 

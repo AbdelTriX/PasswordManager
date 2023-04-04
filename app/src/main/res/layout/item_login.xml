@@ -13,7 +13,7 @@
         android:background="@drawable/background_login">
 
         <TextView
-            android:id="@+id/titleTv"
+            android:id="@+id/itemLogin_titleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/baloo"
@@ -58,6 +58,7 @@
             android:layout_alignParentRight="true"/>
 
         <ImageView
+            android:id="@+id/delete_Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -67,6 +68,7 @@
             android:scrollbarSize="30sp"
             android:src="@drawable/ic_delete" />
         <ImageView
+            android:id="@+id/update_Login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"

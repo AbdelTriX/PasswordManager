@@ -1,6 +1,8 @@
 package com.example.passwordmanager.SQLiteDatabase;
 
-public class CreditCard {
+import java.sql.Timestamp;
+
+public class CreditCard extends Main{
     private int id;
     private String title;
     private int cardNumber;
@@ -18,7 +20,8 @@ public class CreditCard {
         this.cardHolder = cardHolder;
     }
 
-    public CreditCard(int id, String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin) {
+    public CreditCard(int id, String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin, Timestamp time) {
+        super(time);
         this.id = id;
         this.title = title;
         this.cardNumber = cardNumber;

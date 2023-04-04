@@ -1,12 +1,15 @@
 package com.example.passwordmanager.SQLiteDatabase;
 
-public class Login {
+import java.sql.Timestamp;
+
+public class Login extends Main{
     private int id;
     private String title;
     private String email;
     private String password;
 
-    public Login(int id,String title, String email, String password) {
+    public Login(int id, String title, String email, String password, Timestamp time) {
+        super(time);
         this.id = id;
         this.title = title;
         this.email = email;

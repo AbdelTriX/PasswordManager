@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 
 public class Accueil extends AppCompatActivity {
 
@@ -17,6 +18,7 @@ public class Accueil extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
         setTitle("Accueil Page");
+
 
         ////////////////////////////////////////////////////////////////////////////////
         bottomNav = findViewById(R.id.bottonNav);
