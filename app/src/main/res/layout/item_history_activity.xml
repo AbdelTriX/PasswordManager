@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:elevation="5sp"
+    android:layout_margin="5sp"
+    android:background="@color/black"
+    android:gravity="center">
+
+        <TextView
+            android:id="@+id/passwordHistoryTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="password"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:drawableEnd="@drawable/ic_visibility"
+            android:textSize="30sp" />
+
+
+
+</LinearLayout>

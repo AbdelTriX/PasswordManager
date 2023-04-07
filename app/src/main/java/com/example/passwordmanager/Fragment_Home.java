@@ -121,27 +121,9 @@ public class Fragment_Home extends Fragment {
         adapter = new MyAdapter(getActivity(), main);
         listView = view.findViewById(R.id.listview);
         listView.setAdapter(adapter);
-        updateUI();
-
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////
 
         return view;
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Reload data
-    }
-    private void updateUI() {
-        // Retrieve the login data from the database
-        ArrayList<Main> loginList = db.getAllData();
-
-        // Update the UI with the new data
-        adapter = new MyAdapter(getActivity(), loginList);
-        listView.setAdapter(adapter);
     }
 }

@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.view.View;
 
+import com.example.passwordmanager.SQLiteDatabase.HistoryPassword.Password;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +29,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-        db.execSQL("CREATE TABLE historyPassword (id PRIMARY KEY AUTOINCREMENT, password TEXT)");
+        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
     }
 
     @Override
@@ -223,69 +225,34 @@ public class PASMAN_Database extends SQLiteOpenHelper {
     }
 
 
-    ///////////////////////////// For Display data From Login ///////////////////////////////////////
+    /////////////////////////// For Add / Display History Password //////////////////////////////////
+    public void addPasswordHistory(String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("password", password);
+        db.insert("history_password" , null, values);
+        db.close();
+    }
 
-//    public ArrayList getLOGIN_Data () {
-//        ArrayList arrayList = new ArrayList();
-//        SQLiteDatabase s = this.getReadableDatabase();
-//        Cursor cursor = s.rawQuery("SELECT * FROM login",null);
-//
-//
-//        cursor.moveToFirst(); // Bda mn First element
-//        while (cursor.isAfterLast() == false) {
-//
-//            arrayList.add(new Login(cursor.getInt(0),
-//                    cursor.getString(1),
-//                    cursor.getString(2),
-//                    cursor.getString(3)));
-//            cursor.moveToNext();
-//        }
-//
-//        return arrayList;
-//    }
-//    ///////////////////////////////// For Display data from Credit Card ///////////////////////////////////////////
-//
-//    public ArrayList getCreditCard_Data()  {
-//
-//        ArrayList arrayList = new ArrayList();
-//        SQLiteDatabase s = this.getReadableDatabase();
-//        Cursor cursor = s.rawQuery("SELECT * FROM credit_card",null);
-//
-//
-//        cursor.moveToFirst(); // Bda mn First element
-//        while (cursor.isAfterLast() == false) {
-//
-//            arrayList.add(new CreditCard(cursor.getInt(0),
-//                    cursor.getString(1),
-//                    cursor.getInt(2),
-//                    cursor.getString(3),
-//                    cursor.getString(4),
-//                    cursor.getString(5),
-//                    cursor.getInt(6),
-//                    cursor.getInt(7)));
-//            cursor.moveToNext();
-//        }
-//        return arrayList;
-//    }
-//
-//    ////////////////////////////////// For Display Data from Note ///////////////////////////////////////////////////////
-//    public ArrayList getNOTE_Data () {
-//
-//        ArrayList arrayList = new ArrayList();
-//        SQLiteDatabase s = this.getReadableDatabase();
-//        Cursor cursor = s.rawQuery("SELECT * FROM note",null);
-//
-//
-//        cursor.moveToFirst(); // Bda mn First element
-//        while (cursor.isAfterLast() == false) {
-//
-//            arrayList.add(new Note(cursor.getInt(0),
-//                    cursor.getString(1),
-//                    cursor.getString(2)));
-//            cursor.moveToNext();
-//        }
-//        return arrayList;
-//    }
+    public ArrayList<Password> getPasswordHistory() {
+        ArrayList<Password> arrayList = new ArrayList<Password>();
+        SQLiteDatabase s = this.getReadableDatabase();
+
+        // Query the login table
+        Cursor cursorPassword = s.rawQuery("SELECT * FROM history_password", null);
+        while (cursorPassword.moveToNext()) {
+            Password password = new Password(cursorPassword.getInt(0),
+                    cursorPassword.getString(1),
+                    Timestamp.valueOf(cursorPassword.getString(2)));
+            arrayList.add(password);
+        }
+        cursorPassword.close();
+
+// Sort the arrayList in descending order based on the timestamp
+        Collections.sort(arrayList, Collections.reverseOrder());
+        return arrayList;
+    }
+
 
 
         ///////////////////////// For reset /////////////////////////////////
@@ -300,6 +267,8 @@ public class PASMAN_Database extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS note");
             db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
+            db.execSQL("DROP TABLE IF EXISTS historyPassword");
+            db.execSQL("CREATE TABLE historyPassword (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT)");
 
             db.close();
         }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.passwordmanager.SQLiteDatabase.HistoryPassword.History_Password;
 import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
@@ -20,7 +21,7 @@ import java.util.Objects;
 public class Select_Login extends AppCompatActivity {
 
     TextInputEditText emailEt, passwordEt, titleEt;
-    TextView save, generatePassword;
+    TextView save, generatePassword, passwordH;
     private SharedPreferences preferences;
     private PASMAN_Database pasmanDatabase;
 
@@ -37,6 +38,7 @@ public class Select_Login extends AppCompatActivity {
         titleEt = findViewById(R.id.titleEt);
         save = findViewById(R.id.save);
         generatePassword = findViewById(R.id.generatePasswordDialog);
+        passwordH = findViewById(R.id.passwordH);
 
 
 
@@ -53,6 +55,17 @@ public class Select_Login extends AppCompatActivity {
             }
         });
 
+        passwordH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), History_Password.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
+
         /////////////////////////// Insert Data in SQLite Database /////////////////////////////////////
 
         pasmanDatabase = new PASMAN_Database(this);
@@ -67,16 +80,19 @@ public class Select_Login extends AppCompatActivity {
                 Toast.makeText(Select_Login.this, result, Toast.LENGTH_SHORT).show();
 
                 if (result.equals("Insert Succesfully")) {
-
                     titleEt.setText("");
                     emailEt.setText("");
                     passwordEt.setText("");
+
+                    // ADD TO HISTORY PASSWORD
+                    pasmanDatabase.addPasswordHistory(password);
 
                     Intent intent = new Intent(getApplicationContext(), Accueil.class);
                     startActivity(intent);
                     finish();
 
                 }
+                pasmanDatabase.resetAllTables();
             }
         });
     }

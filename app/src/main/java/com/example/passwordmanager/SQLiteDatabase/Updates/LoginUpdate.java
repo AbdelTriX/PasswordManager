@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.passwordmanager.Accueil;
 import com.example.passwordmanager.Generate_password;
 import com.example.passwordmanager.R;
+import com.example.passwordmanager.SQLiteDatabase.HistoryPassword.History_Password;
 import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
 import com.example.passwordmanager.Select_Login;
 import com.google.android.material.textfield.TextInputEditText;
@@ -19,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LoginUpdate extends AppCompatActivity {
 
     TextInputEditText emailEt, passwordEt, titleEt;
-    TextView update, generatePassword;
+    TextView update, generatePassword, passwordH;
     PASMAN_Database pasmanDatabase;
 
 
@@ -32,14 +33,23 @@ public class LoginUpdate extends AppCompatActivity {
         passwordEt = findViewById(R.id.passwordEt);
         titleEt = findViewById(R.id.titleEt);
         update = findViewById(R.id.update);
+
         generatePassword = findViewById(R.id.generatePasswordDialog);
-
-
         generatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Generate_password.class);
                 startActivity(intent);
+            }
+        });
+
+        passwordH = findViewById(R.id.passwordH);
+        passwordH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), History_Password.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -71,10 +81,15 @@ public class LoginUpdate extends AppCompatActivity {
                 int id = getIntent().getIntExtra("id", -1);
                 String idString = String.valueOf(id);
 
-                String result = pasmanDatabase.updateLogin(String.valueOf(idString),titleUp,emailUp,passwordUp);
+
+
+                String result = pasmanDatabase.updateLogin(idString,titleUp,emailUp,passwordUp);
                 Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                 if (result.equals("Update Successfully")){
+                    // ADD TO HISTORY PASSWORD
+                    pasmanDatabase.addPasswordHistory(passwordUp);
+
                     Intent intent = new Intent(getApplicationContext(), Accueil.class);
                     startActivity(intent);
                     finish();
