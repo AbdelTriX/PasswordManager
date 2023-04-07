@@ -6,10 +6,12 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.passwordmanager.SQLiteDatabase.Main;
@@ -72,10 +74,10 @@ public class Fragment_Home extends Fragment {
 
 
 
-    private ListView mListView;
-    private MyAdapter mAdapter;
-    private List<Object> mDataList;
-
+    MyAdapter adapter;
+    ArrayList<Main> main;
+    PASMAN_Database db;
+    ListView listView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,9 +96,8 @@ public class Fragment_Home extends Fragment {
                 startActivity(intent);
             }
         });
-        ///////////////////  For Recycler View /////////////////////////////////////////////
+        ///////////////////  For Display data /////////////////////////////////////////////
 
-        PASMAN_Database db = new PASMAN_Database(requireContext());
 //        List<Login> loginList = db.getLOGIN_Data();
 //        List<CreditCard> creditCardList = db.getCreditCard_Data();
 //        List<Note> noteList = db.getNOTE_Data();
@@ -108,21 +109,39 @@ public class Fragment_Home extends Fragment {
 //        mDataList.addAll(creditCardList);
 //        mDataList.addAll(noteList);
 //        Collections.reverse(mDataList);
+
+
+
+
 //
         // Create adapter and set it to list view
-        ArrayList<Main> main = db.getAllData();
+        db = new PASMAN_Database(requireContext());
+        main = db.getAllData();
 
-        MyAdapter adapter = new MyAdapter(getActivity(), main);
-        ListView listView = view.findViewById(R.id.listview);
+        adapter = new MyAdapter(getActivity(), main);
+        listView = view.findViewById(R.id.listview);
         listView.setAdapter(adapter);
+        updateUI();
 
 
-        // Display the data in a RecyclerView
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-
         return view;
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Reload data
+    }
+    private void updateUI() {
+        // Retrieve the login data from the database
+        ArrayList<Main> loginList = db.getAllData();
+
+        // Update the UI with the new data
+        adapter = new MyAdapter(getActivity(), loginList);
+        listView.setAdapter(adapter);
     }
 }

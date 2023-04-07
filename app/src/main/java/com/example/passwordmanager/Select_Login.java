@@ -59,7 +59,7 @@ public class Select_Login extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = String.valueOf(titleEt.getText()).toString();
+                String title = String.valueOf(titleEt.getText());
                 String email = String.valueOf(emailEt.getText());
                 String password = String.valueOf(passwordEt.getText());
 

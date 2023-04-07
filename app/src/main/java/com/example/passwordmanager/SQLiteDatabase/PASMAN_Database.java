@@ -27,6 +27,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE historyPassword (id PRIMARY KEY AUTOINCREMENT, password TEXT)");
     }
 
     @Override
@@ -35,12 +36,16 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS login ");
         db.execSQL("DROP TABLE IF EXISTS credit_card ");
         db.execSQL("DROP TABLE IF EXISTS note ");
+        db.execSQL("DROP TABLE IF EXISTS historyPassword");
 
         onCreate(db);
 
     }
 
 
+
+
+    // ************************************** For login Insert / Update / Delete ***************************************************
     public String insertLogin(String title, String email, String password) {
         SQLiteDatabase s = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -57,7 +62,28 @@ public class PASMAN_Database extends SQLiteOpenHelper {
             return "Insert Succesfully";
     }
 
+    public String updateLogin(String id, String title, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("title", title);
+        values.put("email", email);
+        values.put("password", password);
+        long result = db.update("login", values, "id=?", new String[]{id});
 
+        if (result == -1) {
+            return "Something wrong";
+        }else{
+            return "Update Successfully";
+        }
+    }
+
+    public void deleteLogin(String id){
+        SQLiteDatabase s = this.getWritableDatabase();
+        s.delete("login", "id=?", new String[]{id});
+        s.close();
+    }
+
+// *********************************** For Credit Card Insert/Update/Delete **********************************************
     public String insertCreditCard(String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin) {
 
         SQLiteDatabase s = this.getWritableDatabase();
@@ -76,9 +102,37 @@ public class PASMAN_Database extends SQLiteOpenHelper {
             return "Something Wrong";
         return "Insert Succesfully";
 
+
+    }
+
+    public String updateCreditCard(String id, String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("title", title);
+        values.put("cardNumber", cardNumber);
+        values.put("type", type);
+        values.put("cardHolder", cardHolder);
+        values.put("expiry", expiry);
+        values.put("cvc", cvc);
+        values.put("pin", pin);
+
+        long result = db.update("credit__card",values,"id=?",new String[]{id});
+        if (result == -1) {
+            return "Something wrong";
+        }else{
+            return "Update Successfully";
+        }
+    }
+
+    public void deleteCreditCard(String id){
+        SQLiteDatabase s = this.getWritableDatabase();
+        s.delete("credit_card", "id=?", new String[]{id});
+        s.close();
     }
 
 
+
+// *********************** For Note Insert / Update / Delete***********************************************
     public String insertNote(String title, String description) {
 
         SQLiteDatabase s = this.getWritableDatabase();
@@ -93,6 +147,31 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         return "Insert Succesfully";
     }
 
+    public String updateNote(String id, String title, String description) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("title", title);
+        values.put("description", description);
+
+        long result = db.update("note",values,"id=?",new String[]{id});
+
+        if (result == -1) {
+            return "Something wrong";
+        }else{
+            return "Update Successfully";
+        }
+
+    }
+
+    public void deleteNote(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("note","id=?",new String[]{id});
+        db.close();
+    }
+
+
+    ///////////////////////////// Import data //////////////////////////////////////////////////////
     public ArrayList<Main> getAllData() {
         ArrayList<Main> arrayList = new ArrayList<>();
         SQLiteDatabase s = this.getReadableDatabase();
@@ -210,7 +289,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
 
 
         ///////////////////////// For reset /////////////////////////////////
-        public void resetTables () {
+        public void resetAllTables () {
             SQLiteDatabase db = getWritableDatabase();
             db.execSQL("DROP TABLE IF EXISTS card");
             db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, Type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER )");

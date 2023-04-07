@@ -1,6 +1,8 @@
     package com.example.passwordmanager.SQLiteDatabase;
 
+    import android.app.AlertDialog;
     import android.content.Context;
+    import android.content.DialogInterface;
     import android.content.Intent;
     import android.view.LayoutInflater;
     import android.view.View;
@@ -9,11 +11,12 @@
     import android.widget.ImageView;
     import android.widget.TextView;
 
+    import com.example.passwordmanager.Accueil;
     import com.example.passwordmanager.R;
-    import com.example.passwordmanager.SQLiteDatabase.Login;
+    import com.example.passwordmanager.SQLiteDatabase.Updates.CardUpdate;
+    import com.example.passwordmanager.SQLiteDatabase.Updates.LoginUpdate;
+    import com.example.passwordmanager.SQLiteDatabase.Updates.NoteUpdate;
 
-    import java.util.ArrayList;
-    import java.util.Collections;
     import java.util.List;
 
     public class MyAdapter extends BaseAdapter {
@@ -67,10 +70,63 @@
                     TextView usernameTextView = convertView.findViewById(R.id.emailTv);
                     TextView passwordTextView = convertView.findViewById(R.id.passwordTv);
 
+
+
                     Login login = (Login) item;
                     titleTextView.setText(login.getTitle());
                     usernameTextView.setText(login.getEmail());
                     passwordTextView.setText(login.getPassword());
+
+                    ImageView update_login = convertView.findViewById(R.id.update_Login);
+                    ImageView delete_Login = convertView.findViewById(R.id.delete_Login);
+
+
+   //////////////////////////////// To save data and display it in Update page ////////////////////////////////
+                    update_login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, LoginUpdate.class);
+                            intent.putExtra("title",login.getTitle());
+                            intent.putExtra("email",login.getEmail());
+                            intent.putExtra("password",login.getPassword());
+                            intent.putExtra("id",login.getId());
+
+                            mContext.startActivity(intent);
+                        }
+                    });
+
+
+                    // TO DELETE FROM DATABASE
+                    delete_Login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setTitle("Confirm Delete");
+                            builder.setMessage("Are you sure you want to delete this login?");
+
+                            // Add the buttons
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked OK button
+                                    PASMAN_Database db = new PASMAN_Database(mContext);
+                                    db.deleteLogin(String.valueOf(login.getId()));
+                                    Intent intent = new Intent(mContext, Accueil.class);
+                                    mContext.startActivity(intent);
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            // Create the AlertDialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    });
+
                     break;
                 case 1: // Credit card item
                     TextView titleTv = convertView.findViewById(R.id.itemCard_titleTv);
@@ -89,6 +145,61 @@
                     expirationTextView.setText(creditCard.getExpiry());
                     cvvTextView.setText(String.valueOf(creditCard.getCvc()));
                     pin.setText(String.valueOf(creditCard.getPin()));
+
+    ///////////////////////////////// To save data and display it in Update credit card ///////////////////////////////
+                    ImageView update_card = convertView.findViewById(R.id.update_CreditCard);
+                    ImageView delete_card = convertView.findViewById(R.id.delete_CreditCard);
+                    update_card.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, CardUpdate.class);
+                            intent.putExtra("title",creditCard.getTitle());
+                            intent.putExtra("cardNumber",creditCard.getCardNumber());
+                            intent.putExtra("type",creditCard.getType());
+                            intent.putExtra("cardHolder",creditCard.getCardHolder());
+                            intent.putExtra("expiry",creditCard.getExpiry());
+                            intent.putExtra("cvc",creditCard.getCvc());
+                            intent.putExtra("pin",creditCard.getPin());
+
+                            intent.putExtra("id",creditCard.getId());
+
+                            mContext.startActivity(intent);
+                        }
+                    });
+
+                    // TO DELETE FROM DATABASE
+                    delete_card.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setTitle("Confirm Delete");
+                            builder.setMessage("Are you sure you want to delete this login?");
+
+                            // Add the buttons
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked OK button
+                                    PASMAN_Database db = new PASMAN_Database(mContext);
+                                    db.deleteCreditCard(String.valueOf(creditCard.getId()));
+                                    Intent intent = new Intent(mContext, Accueil.class);
+                                    mContext.startActivity(intent);
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            // Create the AlertDialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    });
+
+
+
                     break;
                 case 2: // Note item
                     TextView noteTitleTextView = convertView.findViewById(R.id.itemNote_titleTv);
@@ -97,6 +208,55 @@
                     Note note = (Note) item;
                     noteTitleTextView.setText(note.getTitle());
                     description.setText(note.getDescription());
+
+    /////////////////////// To save data and display in Update Note /////////////////////////////////////////
+                    ImageView update_note = convertView.findViewById(R.id.update_Note);
+                    ImageView delete_note = convertView.findViewById(R.id.delete_note);
+                    update_note.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(mContext, NoteUpdate.class);
+                            intent.putExtra("title",note.getTitle());
+                            intent.putExtra("description",note.getDescription());
+
+                            intent.putExtra("id",note.getId());
+                            mContext.startActivity(intent);
+                        }
+                    });
+
+                    // TO DELETE FROM DATABASE
+                    delete_note.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                            builder.setTitle("Confirm Delete");
+                            builder.setMessage("Are you sure you want to delete this login?");
+
+                            // Add the buttons
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User clicked OK button
+                                    PASMAN_Database db = new PASMAN_Database(mContext);
+                                    db.deleteNote(String.valueOf(note.getId()));
+                                    Intent intent = new Intent(mContext, Accueil.class);
+                                    mContext.startActivity(intent);
+                                }
+                            });
+                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            // Create the AlertDialog
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    });
+
+
+
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid view type");
