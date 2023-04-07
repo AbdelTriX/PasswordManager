@@ -258,8 +258,8 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         ///////////////////////// For reset /////////////////////////////////
         public void resetAllTables () {
             SQLiteDatabase db = getWritableDatabase();
-            db.execSQL("DROP TABLE IF EXISTS card");
-            db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, Type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER )");
+            db.execSQL("DROP TABLE IF EXISTS login");
+            db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
             db.execSQL("DROP TABLE IF EXISTS credit_card");
             db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
@@ -268,7 +268,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
             db.execSQL("DROP TABLE IF EXISTS historyPassword");
-            db.execSQL("CREATE TABLE historyPassword (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT)");
+            db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
             db.close();
         }

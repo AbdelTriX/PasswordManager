@@ -17,17 +17,32 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.passwordmanager.SQLiteDatabase.HistoryPassword.History_Password;
+
 public class    New_Item_Activity extends AppCompatActivity {
 
     ListView listView;
     String mTitle[] = {"Login", "Credit Card", "Note"};
     int image[] = {R.drawable.login, R.drawable.creditcard, R.drawable.note};
-    TextView cancel ;
+    TextView cancel, passwordH ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_item);
+
+        getSupportActionBar().setTitle("Add New Item");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        passwordH = findViewById(R.id.passwordH);
+        passwordH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), History_Password.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -40,8 +55,7 @@ public class    New_Item_Activity extends AppCompatActivity {
         });
 
         //action bar add or remove
-        getSupportActionBar().setTitle("Add New Item");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         listView = findViewById(R.id.listview);
 

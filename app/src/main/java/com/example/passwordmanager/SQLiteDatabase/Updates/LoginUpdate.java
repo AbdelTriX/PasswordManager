@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LoginUpdate extends AppCompatActivity {
 
     TextInputEditText emailEt, passwordEt, titleEt;
-    TextView update, generatePassword, passwordH;
+    TextView update, generatePassword;
     PASMAN_Database pasmanDatabase;
 
 
@@ -40,16 +40,6 @@ public class LoginUpdate extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Generate_password.class);
                 startActivity(intent);
-            }
-        });
-
-        passwordH = findViewById(R.id.passwordH);
-        passwordH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), History_Password.class);
-                startActivity(intent);
-                finish();
             }
         });
 

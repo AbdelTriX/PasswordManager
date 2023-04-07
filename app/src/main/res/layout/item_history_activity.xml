@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="5sp"
-    android:layout_margin="5sp"
+    android:layout_margin="10sp"
     android:background="@color/black"
     android:gravity="center">
 

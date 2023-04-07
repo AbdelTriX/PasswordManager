@@ -20,13 +20,25 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
+        android:id="@+id/passwordH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_history"
+        android:text="Password History"
+        android:textColor="@color/yellow"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:drawablePadding="10dp"
+        android:padding="15dp"/>
+
+    <TextView
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="15dp"
         android:text="Cancel"
-        android:textSize="20dp"
+        android:textSize="23dp"
         android:textStyle="bold"
         android:textColor="@color/white" />
 
