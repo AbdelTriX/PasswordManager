@@ -107,13 +107,24 @@
             </com.google.android.material.textfield.TextInputLayout>
             -->
 
+        <TextView
+            android:id="@+id/passwordH"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_history"
+            android:text="Password History"
+            android:textColor="@color/yellow"
+            android:layout_gravity="center"
+            android:layout_marginTop="200dp"
+            android:drawablePadding="10dp"
+            android:padding="15dp"/>
 
         <TextView
             android:id="@+id/update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="UPDATE"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_gravity="bottom|center"

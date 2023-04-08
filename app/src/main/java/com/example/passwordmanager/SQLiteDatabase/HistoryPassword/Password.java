@@ -9,11 +9,13 @@ public class Password extends Main {
     private int id;
     private String password;
     Timestamp time;
+    private int login_id;
 
-    public Password(int id, String password, Timestamp time) {
+    public Password(int id, String password, Timestamp time, int login_id) {
         super(time);
         this.id = id;
         this.password = password;
+        this.login_id = login_id;
     }
 
     @Override

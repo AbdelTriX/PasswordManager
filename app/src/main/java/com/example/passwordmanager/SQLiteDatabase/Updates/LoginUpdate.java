@@ -20,7 +20,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class LoginUpdate extends AppCompatActivity {
 
     TextInputEditText emailEt, passwordEt, titleEt;
-    TextView update, generatePassword;
+    TextView update, generatePassword,passwordH;
     PASMAN_Database pasmanDatabase;
 
 
@@ -33,6 +33,8 @@ public class LoginUpdate extends AppCompatActivity {
         passwordEt = findViewById(R.id.passwordEt);
         titleEt = findViewById(R.id.titleEt);
         update = findViewById(R.id.update);
+        passwordH = findViewById(R.id.passwordH);
+
 
         generatePassword = findViewById(R.id.generatePasswordDialog);
         generatePassword.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +54,7 @@ public class LoginUpdate extends AppCompatActivity {
         titleEt.setText(title);
         emailEt.setText(email);
         passwordEt.setText(password);
+        int id = getIntent().getIntExtra("id", -1);
 
         //action bar add or remove
         getSupportActionBar().setTitle(String.valueOf(title));
@@ -68,7 +71,7 @@ public class LoginUpdate extends AppCompatActivity {
                 String passwordUp = String.valueOf(passwordEt.getText());
 
                 // Because id is Integer, we should convert
-                int id = getIntent().getIntExtra("id", -1);
+                //int id = getIntent().getIntExtra("id", -1);
                 String idString = String.valueOf(id);
 
 
@@ -78,12 +81,21 @@ public class LoginUpdate extends AppCompatActivity {
 
                 if (result.equals("Update Successfully")){
                     // ADD TO HISTORY PASSWORD
-                    pasmanDatabase.addPasswordHistory(passwordUp);
+                    pasmanDatabase.addPasswordHistory(passwordUp,id);
 
                     Intent intent = new Intent(getApplicationContext(), Accueil.class);
                     startActivity(intent);
                     finish();
                 }
+            }
+        });
+
+        passwordH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),History_Password.class);
+                intent.putExtra("id",id);
+                startActivity(intent);
             }
         });
     }

@@ -29,7 +29,8 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  login_id INTEGER,\n" +
+                "    FOREIGN KEY (login_id) REFERENCES login(id))");
     }
 
     @Override
@@ -85,7 +86,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         s.close();
     }
 
-// *********************************** For Credit Card Insert/Update/Delete **********************************************
+    // *********************************** For Credit Card Insert/Update/Delete **********************************************
     public String insertCreditCard(String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin) {
 
         SQLiteDatabase s = this.getWritableDatabase();
@@ -134,7 +135,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
 
 
 
-// *********************** For Note Insert / Update / Delete***********************************************
+    // *********************** For Note Insert / Update / Delete***********************************************
     public String insertNote(String title, String description) {
 
         SQLiteDatabase s = this.getWritableDatabase();
@@ -226,50 +227,69 @@ public class PASMAN_Database extends SQLiteOpenHelper {
 
 
     /////////////////////////// For Add / Display History Password //////////////////////////////////
-    public void addPasswordHistory(String password) {
+    public void addPasswordHistory(String password,int login_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("password", password);
+        values.put("login_id",login_id);
         db.insert("history_password" , null, values);
         db.close();
     }
 
-    public ArrayList<Password> getPasswordHistory() {
-        ArrayList<Password> arrayList = new ArrayList<Password>();
+    public ArrayList<Password> getPasswordHistory(int login_id) {
+        ArrayList<Password> arrayList = new ArrayList<>();
         SQLiteDatabase s = this.getReadableDatabase();
 
         // Query the login table
-        Cursor cursorPassword = s.rawQuery("SELECT * FROM history_password", null);
+        Cursor cursorPassword = s.rawQuery("SELECT * FROM history_password WHERE login_id = ?"
+                , new String[]{String.valueOf(login_id)});
         while (cursorPassword.moveToNext()) {
             Password password = new Password(cursorPassword.getInt(0),
                     cursorPassword.getString(1),
-                    Timestamp.valueOf(cursorPassword.getString(2)));
+                    Timestamp.valueOf(cursorPassword.getString(2)),
+                    cursorPassword.getInt(3));
             arrayList.add(password);
         }
         cursorPassword.close();
 
-// Sort the arrayList in descending order based on the timestamp
+        // Sort the arrayList in descending order based on the timestamp
         Collections.sort(arrayList, Collections.reverseOrder());
         return arrayList;
     }
 
+    public int getMaxLoginId() {
+        // Open the database connection
+        SQLiteDatabase db = getReadableDatabase();
 
+        Cursor cursor = db.rawQuery("SELECT MAX(id) FROM login", null);
+        cursor.moveToFirst();
 
-        ///////////////////////// For reset /////////////////////////////////
-        public void resetAllTables () {
-            SQLiteDatabase db = getWritableDatabase();
-            db.execSQL("DROP TABLE IF EXISTS login");
-            db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        // Extract the count as an integer
+        int maxId = cursor.getInt(0);
 
-            db.execSQL("DROP TABLE IF EXISTS credit_card");
-            db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        cursor.close();
+        db.close();
 
-            db.execSQL("DROP TABLE IF EXISTS note");
-            db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-
-            db.execSQL("DROP TABLE IF EXISTS historyPassword");
-            db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-
-            db.close();
-        }
+        // Return the count
+        return maxId;
     }
+
+
+    ///////////////////////// For reset /////////////////////////////////
+    public void resetAllTables () {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DROP TABLE IF EXISTS login");
+        db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+
+        db.execSQL("DROP TABLE IF EXISTS credit_card");
+        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+
+        db.execSQL("DROP TABLE IF EXISTS note");
+        db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+
+        db.execSQL("DROP TABLE IF EXISTS historyPassword");
+        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+
+        db.close();
+    }
+}

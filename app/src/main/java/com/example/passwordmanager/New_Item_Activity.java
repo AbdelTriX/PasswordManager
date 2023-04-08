@@ -24,7 +24,7 @@ public class    New_Item_Activity extends AppCompatActivity {
     ListView listView;
     String mTitle[] = {"Login", "Credit Card", "Note"};
     int image[] = {R.drawable.login, R.drawable.creditcard, R.drawable.note};
-    TextView cancel, passwordH ;
+    TextView cancel ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +34,6 @@ public class    New_Item_Activity extends AppCompatActivity {
         getSupportActionBar().setTitle("Add New Item");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        passwordH = findViewById(R.id.passwordH);
-        passwordH.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), History_Password.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
         cancel = findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {

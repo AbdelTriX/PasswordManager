@@ -68,22 +68,20 @@ public class Select_Login extends AppCompatActivity {
                 String result = pasmanDatabase.insertLogin(title,email,password);
                 Toast.makeText(Select_Login.this, result, Toast.LENGTH_SHORT).show();
 
-                if (result.equals("Insert Succesfully")) {
-                    pasmanDatabase.addPasswordHistory(password);
-
 
                     titleEt.setText("");
                     emailEt.setText("");
                     passwordEt.setText("");
 
                     // ADD TO HISTORY PASSWORD
+                int id_login = pasmanDatabase.getMaxLoginId();
+                pasmanDatabase.addPasswordHistory(password,id_login);
 
                     Intent intent = new Intent(getApplicationContext(), Accueil.class);
                     startActivity(intent);
                     finish();
 
                 }
-            }
         });
     }
 

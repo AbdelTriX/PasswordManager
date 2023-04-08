@@ -26,9 +26,11 @@ public class History_Password extends AppCompatActivity {
         getSupportActionBar().setTitle("Password History");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        int login_id = getIntent().getIntExtra("id",-1);
+
         db = new PASMAN_Database(this);
         lv = findViewById(R.id.history_list);
-        list = db.getPasswordHistory();
+        list = db.getPasswordHistory(login_id);
         adapter = new Adapter_HistoryPassword(getApplicationContext(), list);
         lv.setAdapter(adapter);
     }
