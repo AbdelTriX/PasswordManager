@@ -88,11 +88,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:hint="Card Holder (Name)"
+                android:hint="CardHolder Name (Name Complet)"
                 android:textColorHint="@color/white"
                 android:inputType="text"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expirate date :"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"/>
     <!-- ******************* MM/YY **************************************** -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -102,29 +110,45 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_gravity="left">
+            android:padding="5dp">
+
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dateEt"
-                android:layout_width="170dp"
+                android:id="@+id/monthEt"
+                android:layout_width="70sp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
-                android:hint="MM/YY"
+                android:hint="MM"
                 android:textColorHint="@color/white"
                 android:inputType="date"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- *********************** Pour CVC ******************************* -->
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:padding="10dp"
+            android:layout_gravity="left">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/yearEt"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:hint="YY"
+                android:textColorHint="@color/white"
+                android:inputType="date"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- *********************** Pour CVC ******************************* -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="10dp">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/cvcEt"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+                android:layout_marginLeft="30dp"
                 android:hint="CVC"
                 android:textColorHint="@color/white"
                 android:inputType="numberDecimal"/>

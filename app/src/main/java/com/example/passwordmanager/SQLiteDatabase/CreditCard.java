@@ -5,10 +5,11 @@ import java.sql.Timestamp;
 public class CreditCard extends Main{
     private int id;
     private String title;
-    private int cardNumber;
+    private long cardNumber;
     private String type;
     private String cardHolder;
-    private String expiry;
+    private int month;
+    private int year ;
     private int cvc;
     private int pin;
 
@@ -20,14 +21,15 @@ public class CreditCard extends Main{
         this.cardHolder = cardHolder;
     }
 
-    public CreditCard(int id, String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin, Timestamp time) {
+    public CreditCard(int id, String title, long cardNumber, String type, String cardHolder, int month, int year,  int cvc, int pin, Timestamp time) {
         super(time);
         this.id = id;
         this.title = title;
         this.cardNumber = cardNumber;
         this.type = type;
         this.cardHolder = cardHolder;
-        this.expiry = expiry;
+        this.month = month;
+        this.year = year;
         this.cvc = cvc;
         this.pin = pin;
     }
@@ -48,11 +50,11 @@ public class CreditCard extends Main{
         this.title = title;
     }
 
-    public int getCardNumber() {
+    public long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
 
@@ -64,12 +66,20 @@ public class CreditCard extends Main{
         this.type = type;
     }
 
-    public String getExpiry() {
-        return expiry;
+    public int getMonth() {
+        return month;
     }
 
-    public void setExpiry(String expiry) {
-        this.expiry = expiry;
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public int getCvc() {

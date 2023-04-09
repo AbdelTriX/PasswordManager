@@ -27,7 +27,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber LONG, type TEXT, cardHolder TEXT, month INTEGER, year INTEGER, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
         db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  login_id INTEGER,\n" +
                 "    FOREIGN KEY (login_id) REFERENCES login(id))");
@@ -87,7 +87,7 @@ public class PASMAN_Database extends SQLiteOpenHelper {
     }
 
     // *********************************** For Credit Card Insert/Update/Delete **********************************************
-    public String insertCreditCard(String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin) {
+    public String insertCreditCard(String title, long cardNumber, String type, String cardHolder, int month, int year, int cvc, int pin) {
 
         SQLiteDatabase s = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -95,7 +95,8 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         values.put("cardNumber", cardNumber);
         values.put("type", type);
         values.put("cardHolder", cardHolder);
-        values.put("expiry", expiry);
+        values.put("month",month);
+        values.put("year",year);
         values.put("cvc", cvc);
         values.put("pin", pin);
 
@@ -108,18 +109,19 @@ public class PASMAN_Database extends SQLiteOpenHelper {
 
     }
 
-    public String updateCreditCard(String id, String title, int cardNumber, String type, String cardHolder, String expiry, int cvc, int pin) {
+    public String updateCreditCard(String id, String title, long cardNumber, String type, String cardHolder, int month, int year, int cvc, int pin) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("title", title);
         values.put("cardNumber", cardNumber);
         values.put("type", type);
         values.put("cardHolder", cardHolder);
-        values.put("expiry", expiry);
+        values.put("month",month);
+        values.put("year",year);
         values.put("cvc", cvc);
         values.put("pin", pin);
 
-        long result = db.update("credit__card",values,"id=?",new String[]{id});
+        long result = db.update("credit_card",values,"id=?",new String[]{id});
         if (result == -1) {
             return "Something wrong";
         }else{
@@ -196,13 +198,14 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         while (cursorCard.moveToNext()) {
             CreditCard card = new CreditCard(cursorCard.getInt(0),
                     cursorCard.getString(1),
-                    cursorCard.getInt(2),
+                    cursorCard.getLong(2),
                     cursorCard.getString(3),
                     cursorCard.getString(4),
-                    cursorCard.getString(5),
+                    cursorCard.getInt(5),
                     cursorCard.getInt(6),
                     cursorCard.getInt(7),
-                    Timestamp.valueOf(cursorCard.getString(8)));
+                    cursorCard.getInt(8),
+                    Timestamp.valueOf(cursorCard.getString(9)));
             arrayList.add(card);
         }
         cursorCard.close();

@@ -128,25 +128,28 @@
                     });
 
                     break;
+
                 case 1: // Credit card item
                     TextView titleTv = convertView.findViewById(R.id.itemCard_titleTv);
                     TextView cardNumberTextView = convertView.findViewById(R.id.cardNumberTv);
                     TextView typeTv = convertView.findViewById(R.id.typeTv);
                     TextView cardHolder = convertView.findViewById(R.id.cardHolderTv);
-                    TextView expirationTextView = convertView.findViewById(R.id.expiryTv);
+                    TextView monthTv = convertView.findViewById(R.id.mTv);
+                    TextView yearTv = convertView.findViewById(R.id.yTv);
                     TextView cvvTextView = convertView.findViewById(R.id.cvcTv);
                     TextView pin = convertView.findViewById(R.id.pinTv);
 
                     CreditCard creditCard = (CreditCard) item;
                     titleTv.setText(creditCard.getTitle());
-                    cardNumberTextView.setText(String.valueOf(creditCard.getCardNumber()));
+                    cardNumberTextView.setText(String.valueOf(creditCard.getCardNumber())); // convert int to String
                     typeTv.setText(creditCard.getType());
                     cardHolder.setText(creditCard.getCardHolder());
-                    expirationTextView.setText(creditCard.getExpiry());
+                    monthTv.setText(String.valueOf(creditCard.getMonth()));
+                    yearTv.setText(String.valueOf(creditCard.getYear()));
                     cvvTextView.setText(String.valueOf(creditCard.getCvc()));
                     pin.setText(String.valueOf(creditCard.getPin()));
 
-    ///////////////////////////////// To save data and display it in Update credit card ///////////////////////////////
+                    // To save data and display it in Update credit card
                     ImageView update_card = convertView.findViewById(R.id.update_CreditCard);
                     ImageView delete_card = convertView.findViewById(R.id.delete_CreditCard);
                     update_card.setOnClickListener(new View.OnClickListener() {
@@ -154,28 +157,26 @@
                         public void onClick(View v) {
                             Intent intent = new Intent(mContext, CardUpdate.class);
                             intent.putExtra("title",creditCard.getTitle());
-                            intent.putExtra("cardNumber",creditCard.getCardNumber());
+                            intent.putExtra("cardNumber",creditCard.getCardNumber()); // int can be directly put as extra
                             intent.putExtra("type",creditCard.getType());
                             intent.putExtra("cardHolder",creditCard.getCardHolder());
-                            intent.putExtra("expiry",creditCard.getExpiry());
+                            intent.putExtra("month",creditCard.getMonth());
+                            intent.putExtra("year",creditCard.getYear());
                             intent.putExtra("cvc",creditCard.getCvc());
                             intent.putExtra("pin",creditCard.getPin());
-
-                            intent.putExtra("id",creditCard.getId());
-
+                            intent.putExtra("id", creditCard.getId());
                             mContext.startActivity(intent);
                         }
                     });
 
-                    // TO DELETE FROM DATABASE
+                    // To delete from database
                     delete_card.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                             builder.setTitle("Confirm Delete");
-                            builder.setMessage("Are you sure you want to delete this login?");
+                            builder.setMessage("Are you sure you want to delete this credit card?");
 
-                            // Add the buttons
                             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User clicked OK button
@@ -192,15 +193,13 @@
                                 }
                             });
 
-                            // Create the AlertDialog
                             AlertDialog dialog = builder.create();
                             dialog.show();
                         }
                     });
 
-
-
                     break;
+
                 case 2: // Note item
                     TextView noteTitleTextView = convertView.findViewById(R.id.itemNote_titleTv);
                     TextView description = convertView.findViewById(R.id.descriptionTv);

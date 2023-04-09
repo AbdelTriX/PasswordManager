@@ -31,16 +31,22 @@ public class Select_Note extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = String.valueOf(titleEt.getText());
+                String title = String.valueOf(titleEt.getText()).toUpperCase();
                 String description = String.valueOf(descriptionEt.getText());
 
-                String result = pasmanDatabase.insertNote(title,description);
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
-                if (result.equals("Insert Succesfully")) {
-                    Intent intent = new Intent(getApplicationContext(), Accueil.class);
-                    startActivity(intent);
-                    finish();
+                if (title.isEmpty() | description.isEmpty() ) {
+                    Toast.makeText(Select_Note.this, "Please enter all info", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String result = pasmanDatabase.insertNote(title, description);
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+
+                    if (result.equals("Insert Succesfully")) {
+                        Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });

@@ -11,11 +11,14 @@ import android.widget.Toast;
 import com.example.passwordmanager.Accueil;
 import com.example.passwordmanager.R;
 import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
+import com.example.passwordmanager.Select_CreditCard;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Calendar;
 
 public class CardUpdate extends AppCompatActivity {
 
-    TextInputEditText titleEt, cardNumberEt, typeEt, cardHolderEt, dateEt, cvcEt, pinEt;
+    TextInputEditText titleEt, cardNumberEt, typeEt, cardHolderEt, monthEt, yearEt,  cvcEt, pinEt;
     TextView update;
     PASMAN_Database pasmanDatabase;
 
@@ -28,7 +31,8 @@ public class CardUpdate extends AppCompatActivity {
         cardNumberEt = findViewById(R.id.cardNumberEt);
         typeEt = findViewById(R.id.typeEt);
         cardHolderEt = findViewById(R.id.cardHolderEt);
-        dateEt = findViewById(R.id.dateEt);
+        monthEt = findViewById(R.id.monthEt);
+        yearEt = findViewById(R.id.yearEt);
         cvcEt = findViewById(R.id.cvcEt);
         pinEt = findViewById(R.id.pinEt);
 
@@ -39,54 +43,94 @@ public class CardUpdate extends AppCompatActivity {
         String title = intent.getStringExtra("title");
 
         // Because cardNumber is Integer and should convert it
-        int cardNumberV = intent.getIntExtra("cardNumber",-1);
+        long cardNumberV = intent.getLongExtra("cardNumber", -1);
         String cardNumber = String.valueOf(cardNumberV);
 
 
         String type = intent.getStringExtra("type");
         String cardHolder = intent.getStringExtra("cardHolder");
-        String expiry = intent.getStringExtra("expiry");
 
         // Same here we should convert
-        String cvc = String.valueOf(getIntent().getIntExtra("cvc",-1));
-        String pin = String.valueOf(getIntent().getIntExtra("pin",-1));
+        String month = String.valueOf(getIntent().getIntExtra("month", -1));
+        String year = String.valueOf(getIntent().getIntExtra("year", -1));
+        String cvc = String.valueOf(getIntent().getIntExtra("cvc", -1));
+        String pin = String.valueOf(getIntent().getIntExtra("pin", -1));
 
         titleEt.setText(title);
         cardNumberEt.setText(cardNumber);
         typeEt.setText(type);
         cardHolderEt.setText(cardHolder);
-        dateEt.setText(expiry);
+        monthEt.setText(month);
+        yearEt.setText(year);
         cvcEt.setText(cvc);
         pinEt.setText(pin);
         //action bar add or remove
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // Get current year
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
 
         pasmanDatabase = new PASMAN_Database(this);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String titleUp = String.valueOf(titleEt.getText());
-                int cardNumberUp = Integer.parseInt(String.valueOf(cardNumberEt.getText()));
-                String typeUp = String.valueOf(typeEt.getText());
-                String cardHolderUp = String.valueOf(cardHolderEt.getText());
-                String expiryUp = String.valueOf(dateEt.getText());
-                int cvcUp = Integer.parseInt(String.valueOf(cvcEt.getText()));
-                int pinUp = Integer.parseInt(String.valueOf(pinEt.getText()));
+                // Get input values from EditTexts
+                String title = String.valueOf(titleEt.getText());
+                String cardNumberStr = String.valueOf(cardNumberEt.getText());
+                String type = String.valueOf(typeEt.getText());
 
-                int id = getIntent().getIntExtra("id",-1);
-                String idStr = String.valueOf(id);
+                // Make complet name like "Tricha ABDELMOUHIT or Oulouark OUSSAMA
+                String[] cardHolderBefore = String.valueOf(cardHolderEt.getText()).split(" ");
+                String cardHolder = cardHolderBefore[0].substring(0,1).toUpperCase() + cardHolderBefore[0].substring(1).toLowerCase() +
+                        " "+cardHolderBefore[1].toUpperCase();
 
-                String result = pasmanDatabase.updateCreditCard(idStr,titleUp,cardNumberUp,typeUp,cardHolderUp,expiryUp,cvcUp,pinUp);
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                String monthStr = String.valueOf(monthEt.getText());
+                String yearStr = String.valueOf(yearEt.getText());
+                String cvcStr = String.valueOf(cvcEt.getText());
+                String pinStr = String.valueOf(pinEt.getText());
 
-                if (result.equals("Update Successfully")){
-                    Intent intent = new Intent(getApplicationContext(), Accueil.class);
-                    startActivity(intent);
-                    finish();
+
+
+
+                // Validate input values
+                if (title.isEmpty() | cardNumberStr.isEmpty() | type.isEmpty() | cardHolder.isEmpty() | monthStr.isEmpty() | yearStr.isEmpty() | cvcStr.isEmpty() | pinStr.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter all info", Toast.LENGTH_SHORT).show();
+                } else if (cardNumberStr.length() != 16) {
+                    Toast.makeText(getApplicationContext(), "Invalid length Card Number", Toast.LENGTH_SHORT).show();
+                } else if (cvcStr.length() != 3) {
+                    Toast.makeText(getApplicationContext(), "Invalid CVC (3).", Toast.LENGTH_SHORT).show();
+                } else if (pinStr.length() != 4) {
+                    Toast.makeText(getApplicationContext(), "Invalid PIN (4).", Toast.LENGTH_SHORT).show();
+                } else if (Integer.parseInt(monthStr) < 1 | Integer.parseInt(monthStr) > 12) {
+                    Toast.makeText(getApplicationContext(), "Invalid month.", Toast.LENGTH_SHORT).show();
+                } else if (yearStr.length() != 4 | Integer.parseInt(yearStr) < 1970 | Integer.parseInt(yearStr) > currentYear + 14) {
+                    Toast.makeText(getApplicationContext(), "Invalid year", Toast.LENGTH_SHORT).show();
+                } else {
+                    long cardNumber = Long.parseLong(cardNumberStr);
+                    int month = Integer.parseInt(monthStr);
+                    int year = Integer.parseInt(yearStr);
+                    int cvc = Integer.parseInt(cvcStr);
+                    int pin = Integer.parseInt(pinStr);
+
+                    int id = getIntent().getIntExtra("id",-1);
+                    String idStr = String.valueOf(id);
+
+                    String result = pasmanDatabase.updateCreditCard(idStr, title, cardNumber, type, cardHolder, month, year, cvc, pin);
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+
+                    if (result.equals("Update Successfully")) {
+                        Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
+
+                // Save data to database
+
             }
         });
+
     }
 }

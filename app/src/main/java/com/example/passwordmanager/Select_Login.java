@@ -61,12 +61,19 @@ public class Select_Login extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = String.valueOf(titleEt.getText());
+                String title = String.valueOf(titleEt.getText()).toUpperCase();
                 String email = String.valueOf(emailEt.getText());
                 String password = String.valueOf(passwordEt.getText());
 
-                String result = pasmanDatabase.insertLogin(title,email,password);
-                Toast.makeText(Select_Login.this, result, Toast.LENGTH_SHORT).show();
+                if (title.isEmpty() | email.isEmpty() | password.isEmpty()) {
+                    Toast.makeText(Select_Login.this, "Please enter all info", Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 7) {
+                    Toast.makeText(Select_Login.this, "Invalid password < 8", Toast.LENGTH_SHORT).show();
+                } else if (email.length() < 10) {
+                    Toast.makeText(Select_Login.this, "Invalid email", Toast.LENGTH_SHORT).show();
+                } else {
+                    String result = pasmanDatabase.insertLogin(title, email, password);
+                    Toast.makeText(Select_Login.this, result, Toast.LENGTH_SHORT).show();
 
 
                     titleEt.setText("");
@@ -74,14 +81,15 @@ public class Select_Login extends AppCompatActivity {
                     passwordEt.setText("");
 
                     // ADD TO HISTORY PASSWORD
-                int id_login = pasmanDatabase.getMaxLoginId();
-                pasmanDatabase.addPasswordHistory(password,id_login);
+                    int id_login = pasmanDatabase.getMaxLoginId();
+                    pasmanDatabase.addPasswordHistory(password, id_login);
 
                     Intent intent = new Intent(getApplicationContext(), Accueil.class);
                     startActivity(intent);
                     finish();
 
                 }
+            }
         });
     }
 
