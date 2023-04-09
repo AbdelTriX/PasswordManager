@@ -49,12 +49,7 @@ public class Select_CreditCard extends AppCompatActivity {
                 String title = String.valueOf(titleEt.getText()).toUpperCase();
                 String cardNumberStr = String.valueOf(cardNumberEt.getText());
                 String type = String.valueOf(typeEt.getText());
-
-                // Make complet name like "Tricha ABDELMOUHIT or Oulouark OUSSAMA
-                String[] cardHolderBefore = String.valueOf(cardHolderEt.getText()).split(" ");
-                String cardHolder = cardHolderBefore[0].substring(0,1).toUpperCase() + cardHolderBefore[0].substring(1).toLowerCase() +
-                        " "+cardHolderBefore[1].toUpperCase();
-
+                String cardHolder = String.valueOf(cardHolderEt.getText()).toUpperCase();
                 String monthStr = String.valueOf(monthEt.getText());
                 String yearStr = String.valueOf(yearEt.getText());
                 String cvcStr = String.valueOf(cvcEt.getText());
