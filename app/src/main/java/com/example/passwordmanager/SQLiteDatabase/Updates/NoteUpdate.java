@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.passwordmanager.Accueil;
 import com.example.passwordmanager.R;
 import com.example.passwordmanager.SQLiteDatabase.PASMAN_Database;
+import com.example.passwordmanager.Select_Note;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class NoteUpdate extends AppCompatActivity {
@@ -51,13 +52,19 @@ public class NoteUpdate extends AppCompatActivity {
                 int id = getIntent().getIntExtra("id", -1);
                 String idString = String.valueOf(id);
 
-                String result = pasmanDatabase.updateNote(idString,titleUp,descriptionUp);
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                if (title.isEmpty() | description.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter all info", Toast.LENGTH_SHORT).show();
+                } else if(titleUp.equals(title) && descriptionUp.equals(description)) {
+                    Toast.makeText(NoteUpdate.this, "There is no update !", Toast.LENGTH_SHORT).show();
+                }else {
+                    String result = pasmanDatabase.updateNote(idString, titleUp, descriptionUp);
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
-                if (result.equals("Update Successfully")){
-                    Intent intent = new Intent(getApplicationContext(), Accueil.class);
-                    startActivity(intent);
-                    finish();
+                    if (result.equals("Update Successfully")) {
+                        Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });

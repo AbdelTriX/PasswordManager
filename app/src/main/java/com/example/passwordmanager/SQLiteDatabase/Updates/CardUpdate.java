@@ -77,10 +77,10 @@ public class CardUpdate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Get input values from EditTexts
-                String title = String.valueOf(titleEt.getText());
+                String titleUp = String.valueOf(titleEt.getText());
                 String cardNumberStr = String.valueOf(cardNumberEt.getText());
-                String type = String.valueOf(typeEt.getText());
-                String cardHolder = String.valueOf(cardHolderEt.getText()).toUpperCase();
+                String typeUp = String.valueOf(typeEt.getText());
+                String cardHolderUp = String.valueOf(cardHolderEt.getText()).toUpperCase();
                 String monthStr = String.valueOf(monthEt.getText());
                 String yearStr = String.valueOf(yearEt.getText());
                 String cvcStr = String.valueOf(cvcEt.getText());
@@ -90,7 +90,7 @@ public class CardUpdate extends AppCompatActivity {
 
 
                 // Validate input values
-                if (title.isEmpty() | cardNumberStr.isEmpty() | type.isEmpty() | cardHolder.isEmpty() | monthStr.isEmpty() | yearStr.isEmpty() | cvcStr.isEmpty() | pinStr.isEmpty()) {
+                if (titleUp.isEmpty() | cardNumberStr.isEmpty() | typeUp.isEmpty() | cardHolderUp.isEmpty() | monthStr.isEmpty() | yearStr.isEmpty() | cvcStr.isEmpty() | pinStr.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please enter all info", Toast.LENGTH_SHORT).show();
                 } else if (cardNumberStr.length() != 16) {
                     Toast.makeText(getApplicationContext(), "Invalid length Card Number", Toast.LENGTH_SHORT).show();
@@ -102,7 +102,9 @@ public class CardUpdate extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Invalid month.", Toast.LENGTH_SHORT).show();
                 } else if (yearStr.length() != 4 | Integer.parseInt(yearStr) < 1970 | Integer.parseInt(yearStr) > currentYear + 14) {
                     Toast.makeText(getApplicationContext(), "Invalid year", Toast.LENGTH_SHORT).show();
-                } else {
+                } else if (title.equals(title) && cardNumberStr.equals(cardNumber) && typeUp.equals(type) && cardHolderUp.equals(cardHolder) && monthStr.equals(month) && yearStr.equals(year) && cvcStr.equals(cvc) && pinStr.equals(pin)){
+                    Toast.makeText(CardUpdate.this, "There's no update!!", Toast.LENGTH_SHORT).show();
+                }else {
                     long cardNumber = Long.parseLong(cardNumberStr);
                     int month = Integer.parseInt(monthStr);
                     int year = Integer.parseInt(yearStr);
@@ -112,7 +114,7 @@ public class CardUpdate extends AppCompatActivity {
                     int id = getIntent().getIntExtra("id",-1);
                     String idStr = String.valueOf(id);
 
-                    String result = pasmanDatabase.updateCreditCard(idStr, title, cardNumber, type, cardHolder, month, year, cvc, pin);
+                    String result = pasmanDatabase.updateCreditCard(idStr, titleUp, cardNumber, type, cardHolderUp, month, year, cvc, pin);
                     Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
                     if (result.equals("Update Successfully")) {

@@ -2,11 +2,15 @@ package com.example.passwordmanager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +30,7 @@ public class Select_Login extends AppCompatActivity {
     private PASMAN_Database pasmanDatabase;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,7 @@ public class Select_Login extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+
         generatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +60,32 @@ public class Select_Login extends AppCompatActivity {
             }
         });
 
+            // Hide and Show Password in EditText
+        passwordEt.setTransformationMethod(new PasswordTransformationMethod()); // Par default masqué
+        passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
+        passwordEt.setOnTouchListener((v, event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (passwordEt.getRight() - passwordEt.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    int selectionStart = passwordEt.getSelectionStart();
+                    int selectionEnd = passwordEt.getSelectionEnd();
+
+                    if (passwordEt.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // Show password
+                        passwordEt.setTransformationMethod(null);
+                        passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_no_visibility, 0);
+                    } else {
+                        // Hide password
+                        passwordEt.setTransformationMethod(new PasswordTransformationMethod());
+                        passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
+                    }
+
+                    passwordEt.setSelection(selectionStart, selectionEnd);
+                    return true;
+                }
+            }
+            return false;
+        });
 
         /////////////////////////// Insert Data in SQLite Database /////////////////////////////////////
 
@@ -93,8 +125,7 @@ public class Select_Login extends AppCompatActivity {
         });
     }
 
-
-///////////////////////////// To save data from Select login (Life cycle)   /////////////////////////////////////////
+    ///////////////////////////// To save data from Select login (Life cycle) (Fach katmchi password manager w katrje3)  /////////////////////////////////////////
     @Override
     protected void onResume() {
         super.onResume();
@@ -114,3 +145,4 @@ public class Select_Login extends AppCompatActivity {
             editor.apply();
         }
     }
+

@@ -3,6 +3,7 @@ package com.example.passwordmanager.SQLiteDatabase.HistoryPassword;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.example.passwordmanager.R;
@@ -33,5 +34,18 @@ public class History_Password extends AppCompatActivity {
         list = db.getPasswordHistory(login_id);
         adapter = new Adapter_HistoryPassword(getApplicationContext(), list);
         lv.setAdapter(adapter);
+    }
+
+    //  Fach clicki user 3la arrow li kain f action, Had method kat3ayat 3la finish() bach trje3 activity li qbal
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // User clicked back button on the action bar
+                finish(); // Finish the current activity
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -5,14 +5,19 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.TooltipCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.passwordmanager.SQLiteDatabase.Main;
 import com.example.passwordmanager.SQLiteDatabase.MyAdapter;
@@ -78,11 +83,13 @@ public class Fragment_Home extends Fragment {
     ArrayList<Main> main;
     PASMAN_Database db;
     ListView listView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         FloatingActionButton newItem;
+
 
         View view =  inflater.inflate(R.layout.fragment__home, container, false);
         actionBar.setTitle("Home");
@@ -96,21 +103,6 @@ public class Fragment_Home extends Fragment {
                 startActivity(intent);
             }
         });
-        ///////////////////  For Display data /////////////////////////////////////////////
-
-//        List<Login> loginList = db.getLOGIN_Data();
-//        List<CreditCard> creditCardList = db.getCreditCard_Data();
-//        List<Note> noteList = db.getNOTE_Data();
-//        db.close();
-//
-//        // Combine all data into one list
-//        mDataList = new ArrayList<>();
-//        mDataList.addAll(loginList);
-//        mDataList.addAll(creditCardList);
-//        mDataList.addAll(noteList);
-//        Collections.reverse(mDataList);
-
-
 
 
 //
@@ -120,7 +112,18 @@ public class Fragment_Home extends Fragment {
 
         adapter = new MyAdapter(getActivity(), main);
         listView = view.findViewById(R.id.listview);
+
+
         listView.setAdapter(adapter);
+
+        // Display ImageView & textView if listView is Empty
+        LinearLayout emptyStateLayout = view.findViewById(R.id.empty_state_layout);
+        if (listView.getCount() == 0) {
+            emptyStateLayout.setVisibility(View.VISIBLE);
+        } else {
+            emptyStateLayout.setVisibility(View.GONE);
+        }
+
 
 
 
@@ -129,6 +132,8 @@ public class Fragment_Home extends Fragment {
 
         return view;
     }
+
+    // To refresh page every time we return back to home
     @Override
     public void onResume() {
         super.onResume();

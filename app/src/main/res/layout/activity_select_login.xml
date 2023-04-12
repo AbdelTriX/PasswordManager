@@ -72,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:hint="Password"
+                    android:drawableEnd="@drawable/ic_visibility"
                     android:textColorHint="@color/white"
                     android:inputType="text"/>
             </com.google.android.material.textfield.TextInputLayout>

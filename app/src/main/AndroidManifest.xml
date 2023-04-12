@@ -33,7 +33,7 @@
         <activity
             android:name=".Generate_password"
             android:exported="false"
-            android:parentActivityName=".Select_Login" />
+            android:parentActivityName=".Select_Login"/>
         <activity
             android:name=".Select_Note"
             android:exported="false"

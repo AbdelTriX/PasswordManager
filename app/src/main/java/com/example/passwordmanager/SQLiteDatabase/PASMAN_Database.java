@@ -26,10 +26,29 @@ public class PASMAN_Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber LONG, type TEXT, cardHolder TEXT, month INTEGER, year INTEGER, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-        db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  login_id INTEGER,\n" +
+        db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "title TEXT," +
+                " email TEXT," +
+                " password TEXT," +
+                " time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " title TEXT," +
+                " cardNumber LONG," +
+                " type TEXT," +
+                " cardHolder TEXT," +
+                " month INTEGER," +
+                " year INTEGER," +
+                " cvc INTEGER," +
+                " pin INTEGER," +
+                " time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " title TEXT," +
+                " description TEXT," +
+                " time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                " password TEXT," +
+                " time TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                "  login_id INTEGER,\n" +
                 "    FOREIGN KEY (login_id) REFERENCES login(id))");
     }
 
@@ -285,14 +304,14 @@ public class PASMAN_Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE login (id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, email TEXT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
         db.execSQL("DROP TABLE IF EXISTS credit_card");
-        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber INTEGER, type TEXT, cardHolder TEXT, expiry TEXT, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
+        db.execSQL("CREATE TABLE credit_card (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, cardNumber LONG, type TEXT, cardHolder TEXT, month INTEGER, year INTEGER, cvc INTEGER, pin INTEGER, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
         db.execSQL("DROP TABLE IF EXISTS note");
         db.execSQL("CREATE TABLE note (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
         db.execSQL("DROP TABLE IF EXISTS historyPassword");
-        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
-
+        db.execSQL("CREATE TABLE history_password (id INTEGER PRIMARY KEY AUTOINCREMENT, password TEXT, time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,  login_id INTEGER,\n" +
+                "    FOREIGN KEY (login_id) REFERENCES login(id))");
         db.close();
     }
 }

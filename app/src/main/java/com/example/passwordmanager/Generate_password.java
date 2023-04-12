@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -45,8 +46,6 @@ public class Generate_password extends AppCompatActivity {
 
 
         passwordEditText = findViewById(R.id.showPassword);
-        String password = passwordEditText.getText().toString();
-
 
         ////////////////////// Pour Action Bar /////////////////////////////////////////////
         //action bar add or remove
@@ -139,10 +138,16 @@ public class Generate_password extends AppCompatActivity {
     }
 
 
-
+    //  Fach clicki user 3la arrow li kain f action, Had method kat3ayat 3la finish() bach trje3 activity li qbal
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // User clicked back button on the action bar
+                finish(); // Finish the current activity
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -2,9 +2,13 @@ package com.example.passwordmanager.SQLiteDatabase.Updates;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +28,8 @@ public class LoginUpdate extends AppCompatActivity {
     PASMAN_Database pasmanDatabase;
 
 
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,34 @@ public class LoginUpdate extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        // Hide and Show Password in EditText
+        passwordEt.setTransformationMethod(new PasswordTransformationMethod()); // Par default masqué
+        passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
+        passwordEt.setOnTouchListener((View v, @SuppressLint("ClickableViewAccessibility") MotionEvent event) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (passwordEt.getRight() - passwordEt.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    int selectionStart = passwordEt.getSelectionStart();
+                    int selectionEnd = passwordEt.getSelectionEnd();
+
+                    if (passwordEt.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // Show password
+                        passwordEt.setTransformationMethod(null);
+                        passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_no_visibility, 0);
+                    } else {
+                        // Hide password
+                        passwordEt.setTransformationMethod(new PasswordTransformationMethod());
+                        passwordEt.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_visibility, 0);
+                    }
+
+                    passwordEt.setSelection(selectionStart, selectionEnd);
+                    return true;
+                }
+            }
+            return false;
+        });
+
+
 
         pasmanDatabase = new PASMAN_Database(this);
         update.setOnClickListener(new View.OnClickListener() {
@@ -74,18 +108,26 @@ public class LoginUpdate extends AppCompatActivity {
                 //int id = getIntent().getIntExtra("id", -1);
                 String idString = String.valueOf(id);
 
+                if (title.isEmpty() | email.isEmpty() | password.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please enter all info", Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 7) {
+                    Toast.makeText(getApplicationContext(), "Invalid password < 8", Toast.LENGTH_SHORT).show();
+                } else if (email.length() < 10) {
+                    Toast.makeText(getApplicationContext(), "Invalid email", Toast.LENGTH_SHORT).show();
+                } else if (titleUp.equals(title) && emailUp.equals(email) && passwordUp.equals(password)) {
+                    Toast.makeText(LoginUpdate.this, "There's no update !", Toast.LENGTH_SHORT).show();
+                } else {
+                    String result = pasmanDatabase.updateLogin(idString, titleUp, emailUp, passwordUp);
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
 
+                    if (result.equals("Update Successfully")) {
+                        // ADD TO HISTORY PASSWORD
+                        pasmanDatabase.addPasswordHistory(passwordUp, id);
 
-                String result = pasmanDatabase.updateLogin(idString,titleUp,emailUp,passwordUp);
-                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-
-                if (result.equals("Update Successfully")){
-                    // ADD TO HISTORY PASSWORD
-                    pasmanDatabase.addPasswordHistory(passwordUp,id);
-
-                    Intent intent = new Intent(getApplicationContext(), Accueil.class);
-                    startActivity(intent);
-                    finish();
+                        Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }
         });
@@ -99,6 +141,5 @@ public class LoginUpdate extends AppCompatActivity {
             }
         });
     }
-
 
 }

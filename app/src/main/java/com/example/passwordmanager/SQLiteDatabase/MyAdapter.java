@@ -4,12 +4,14 @@
     import android.content.Context;
     import android.content.DialogInterface;
     import android.content.Intent;
+    import android.text.method.PasswordTransformationMethod;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.BaseAdapter;
     import android.widget.ImageView;
     import android.widget.TextView;
+    import android.widget.Toast;
 
     import com.example.passwordmanager.Accueil;
     import com.example.passwordmanager.R;
@@ -79,7 +81,23 @@
 
                     ImageView update_login = convertView.findViewById(R.id.update_Login);
                     ImageView delete_Login = convertView.findViewById(R.id.delete_Login);
+                    ImageView showHide = convertView.findViewById(R.id.show_hide);
 
+                    // Pour que les info soient masqués par default
+                    passwordTextView.setTransformationMethod(new PasswordTransformationMethod());
+                    // Hide and show info in item
+                    showHide.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (passwordTextView.getTransformationMethod() == null) {
+                                passwordTextView.setTransformationMethod(new PasswordTransformationMethod());
+                                showHide.setImageResource(R.drawable.ic_visibility);
+                            } else {
+                                passwordTextView.setTransformationMethod(null);
+                                showHide.setImageResource(R.drawable.ic_no_visibility);
+                            }
+                        }
+                    });
 
    //////////////////////////////// To save data and display it in Update page ////////////////////////////////
                     update_login.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +128,9 @@
                                     // User clicked OK button
                                     PASMAN_Database db = new PASMAN_Database(mContext);
                                     db.deleteLogin(String.valueOf(login.getId()));
+
+                                    Toast.makeText(mContext, "Delete Succesffully!", Toast.LENGTH_SHORT).show();
+                                    
                                     Intent intent = new Intent(mContext, Accueil.class);
                                     mContext.startActivity(intent);
                                 }
@@ -118,6 +139,7 @@
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User cancelled the dialog
                                     dialog.dismiss();
+                                    Toast.makeText(mContext, "Delete Canceled", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -148,6 +170,31 @@
                     yearTv.setText(String.valueOf(creditCard.getYear()));
                     cvvTextView.setText(String.valueOf(creditCard.getCvc()));
                     pin.setText(String.valueOf(creditCard.getPin()));
+
+
+                    // Pour que les info soient masqués par default
+                    String cardNumberLast = String.valueOf(cardNumberTextView).substring(3);
+                    cardNumberTextView.setTransformationMethod(new PasswordTransformationMethod());
+                    cvvTextView.setTransformationMethod(new PasswordTransformationMethod());
+                    pin.setTransformationMethod(new PasswordTransformationMethod());
+                    // Hide and show info in item
+                    showHide = convertView.findViewById(R.id.show_hide);
+                    showHide.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (cardNumberTextView.getTransformationMethod() == null) {
+                                cardNumberTextView.setTransformationMethod(new PasswordTransformationMethod());
+                                cvvTextView.setTransformationMethod(new PasswordTransformationMethod());
+                                pin.setTransformationMethod(new PasswordTransformationMethod());
+                                showHide.setImageResource(R.drawable.ic_visibility);
+                            } else {
+                                cardNumberTextView.setTransformationMethod(null);
+                                cvvTextView.setTransformationMethod(null);
+                                pin.setTransformationMethod(null);
+                                showHide.setImageResource(R.drawable.ic_no_visibility);
+                            }
+                        }
+                    });
 
                     // To save data and display it in Update credit card
                     ImageView update_card = convertView.findViewById(R.id.update_CreditCard);
@@ -182,6 +229,10 @@
                                     // User clicked OK button
                                     PASMAN_Database db = new PASMAN_Database(mContext);
                                     db.deleteCreditCard(String.valueOf(creditCard.getId()));
+
+                                    Toast.makeText(mContext, "Delete Succesffully!", Toast.LENGTH_SHORT).show();
+
+
                                     Intent intent = new Intent(mContext, Accueil.class);
                                     mContext.startActivity(intent);
                                 }
@@ -190,6 +241,7 @@
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User cancelled the dialog
                                     dialog.dismiss();
+                                    Toast.makeText(mContext, "Delete Canceled", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -206,11 +258,33 @@
 
                     Note note = (Note) item;
                     noteTitleTextView.setText(note.getTitle());
-                    description.setText(note.getDescription());
+                    String descriptionAfter = note.getDescription();
+                    if (note.getDescription().length() > 15) {
+                        descriptionAfter = note.getDescription().substring(0, 15) + " ...";
+                    }
+                    description.setText(descriptionAfter);
 
-    /////////////////////// To save data and display in Update Note /////////////////////////////////////////
+
+                    // Hide and show info in item
+                    showHide = convertView.findViewById(R.id.show_hide);
+                    showHide.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (description.getTransformationMethod() == null) {
+                                description.setTransformationMethod(new PasswordTransformationMethod());
+                                showHide.setImageResource(R.drawable.ic_visibility);
+                            } else {
+                                description.setTransformationMethod(null);
+                                showHide.setImageResource(R.drawable.ic_no_visibility);
+                            }
+                        }
+                    });
+
+
+                    /////////////////////// To save data and display in Update Note /////////////////////////////////////////
                     ImageView update_note = convertView.findViewById(R.id.update_Note);
                     ImageView delete_note = convertView.findViewById(R.id.delete_note);
+
                     update_note.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -237,6 +311,9 @@
                                     // User clicked OK button
                                     PASMAN_Database db = new PASMAN_Database(mContext);
                                     db.deleteNote(String.valueOf(note.getId()));
+
+                                    Toast.makeText(mContext, "Delete Succesffully!", Toast.LENGTH_SHORT).show();
+
                                     Intent intent = new Intent(mContext, Accueil.class);
                                     mContext.startActivity(intent);
                                 }
@@ -244,6 +321,7 @@
                             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     // User cancelled the dialog
+                                    Toast.makeText(mContext, "Delete Canceled", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
                             });
